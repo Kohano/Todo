@@ -83,7 +83,25 @@ class TodoController {
          existingTodo.title = update.title
         return existingTodo
    }
+    @DeleteMapping("/todos/{todoId}")
+    fun delteTodo(
+        @PathVariable
+        todoId: Int
+    ): Todo{
+        var existingTodo: Todo? = null
+        for(todo in todoList) {
+            if (todo.id == todoId) {
+                existingTodo = todo
+            }
 
+        }
+        if (existingTodo == null){
+            throw Error("Not found")
+        }
+        todoList.remove(existingTodo)
+
+        return existingTodo
+    }
 
 
 }
