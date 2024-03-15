@@ -1,17 +1,17 @@
 package com.sumiProject.first.web
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import kotlin.random.Random
 
 
 data class Todo(
     val id : Int,
-    val title : String
+    var title : String
 )
 data class CreateTodoRequest(
+    val title: String
+)
+data class UpdateTodoRequest(
     val title: String
 )
 @RestController
@@ -34,6 +34,18 @@ class TodoController {
         println("Sumi")
         return  todoList
     }
+    @GetMapping("/todos/{todoId}")
+    fun getTodos(@PathVariable todoId: Int): Todo? {
+        println("Path variable received $todoId")
+        var resultTodo: Todo? = null
+        for(todo in todoList) {
+            if (todo.id == todoId) {
+                resultTodo = todo
+            }
+        }
+//        val resultTodo = todoList.find { title: User -> title.Id == todoId }
+        return resultTodo
+    }
 
     @PostMapping("/todos")
     fun createTodo(
@@ -48,4 +60,30 @@ class TodoController {
         todoList.add(todo)
         return todo
     }
+
+    @PatchMapping("/todos/{todoId}")
+   fun updateTodo(
+        @PathVariable
+       todoId: Int,
+
+        @RequestBody
+       update: UpdateTodoRequest
+   ): Todo{
+        println("Received request ${update}")
+        var existingTodo: Todo? = null
+        for(todo in todoList) {
+            if (todo.id == todoId) {
+                existingTodo = todo
+            }
+
+        }
+        if (existingTodo == null){
+            throw Error("Not found")
+        }
+         existingTodo.title = update.title
+        return existingTodo
+   }
+
+
+
 }
