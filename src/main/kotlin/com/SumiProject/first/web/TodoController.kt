@@ -1,5 +1,7 @@
 package com.sumiProject.first.web
 
+import com.SumiProject.first.errors.NotFoundError
+import com.SumiProject.first.web.ErrorResponse
 import org.springframework.web.bind.annotation.*
 import kotlin.random.Random
 
@@ -44,6 +46,7 @@ class TodoController {
             }
         }
 //        val resultTodo = todoList.find { title: User -> title.Id == todoId }
+        if(resultTodo == null) throw NotFoundError("User with id $todoId not found!")
         return resultTodo
     }
 
@@ -78,7 +81,7 @@ class TodoController {
 
         }
         if (existingTodo == null){
-            throw Error("Not found")
+            throw NotFoundError("User with id $todoId not found!")
         }
          existingTodo.title = update.title
         return existingTodo
@@ -96,12 +99,13 @@ class TodoController {
 
         }
         if (existingTodo == null){
-            throw Error("Not found")
+           throw NotFoundError("User with id $todoId not found!")
         }
         todoList.remove(existingTodo)
 
         return existingTodo
     }
+
 
 
 }
