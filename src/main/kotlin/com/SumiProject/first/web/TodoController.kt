@@ -11,10 +11,12 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import kotlin.random.Random
 
-
+enum class Status { InProgress, Ended
+}
 data class Todo(
     val id : Int,
     var title : String,
+    var status: Status = Status.InProgress,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     var deadLine : LocalDateTime? = null
 )
@@ -24,6 +26,7 @@ data class CreateTodoRequest(
 )
 data class UpdateTodoRequest(
     val title: String,
+    val status: Status,
     var deadLine: LocalDateTime?
 )
 @RestController
@@ -104,6 +107,7 @@ class TodoController {
          if (update.deadLine != null && update.deadLine!! < LocalDateTime.now()){
              throw BadRequestError("User can not set deadLine on Past. ")
          }
+         existingTodo.status = update.status
          existingTodo.deadLine = update.deadLine
          existingTodo.title = update.title
         return existingTodo
