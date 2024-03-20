@@ -14,9 +14,6 @@ data class ErrorResponse(
     val message: String?
 )
 
-
-
-
 @ControllerAdvice
 class ExceptionControllerAdvice {
 
@@ -39,6 +36,7 @@ class ExceptionControllerAdvice {
         )
         return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
     }
+
     @ExceptionHandler
     fun handleBadRequestError(ex: BadRequestError): ResponseEntity<ErrorResponse> {
 
