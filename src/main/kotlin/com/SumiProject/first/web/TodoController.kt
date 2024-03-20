@@ -1,8 +1,13 @@
 package com.sumiProject.first.web
 
+import com.SumiProject.first.Domain.Todo
+import com.SumiProject.first.Domain.UserService
 import com.SumiProject.first.errors.BadRequestError
 import com.SumiProject.first.errors.NotFoundError
+import com.SumiProject.first.web.CreateTodoRequest
 import com.SumiProject.first.web.ErrorResponse
+import com.SumiProject.first.web.TodoResponse
+import com.SumiProject.first.web.UpdateTodoRequest
 import org.apache.coyote.BadRequestException
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.HttpClientErrorException.BadRequest
@@ -11,57 +16,27 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import kotlin.random.Random
 
-enum class Status { InProgress, Ended
-}
-data class Todo(
-    val id : Int,
-    var title : String,
-    var status: Status = Status.InProgress,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
-    var deadLine : LocalDateTime? = null
-)
-data class CreateTodoRequest(
-    val title: String,
-    var deadLine: LocalDateTime?
-)
-data class UpdateTodoRequest(
-    val title: String,
-    val status: Status,
-    var deadLine: LocalDateTime?
-)
+
 @RestController
-class TodoController {
-    val todoList: MutableList<Todo> = mutableListOf(
-        Todo(1,  "Morning Coffee" ),
-        Todo(2, "Wash up"),
-        Todo(3,  "Clean the House"),
-        Todo(4,  "Make a Breakfast"),
-        Todo(5,  "Play Games"),
-        Todo( 6,  "Play Elden Ring"),
-        Todo( 7, "Play until All Achievement is obtained "),
-        Todo( 8,  "Cry because there is bug in the game"),
-        Todo(9,  "Tired from crying so go to sleep"),
+class TodoController (
+    val userService: UserService
+){
 
-
-
-    )
     @GetMapping("/todos")
-    fun getTodos(): List<Todo> {
-        println("Sumi")
-        return  todoList
-    }
-    @GetMapping("/todos/{todoId}")
-    fun getTodos(@PathVariable todoId: Int): Todo? {
-        println("Path variable received $todoId")
-        var resultTodo: Todo? = null
-        for(todo in todoList) {
-            if (todo.id == todoId) {
-                resultTodo = todo
-            }
+    fun getTodos(): List<TodoResponse> {
+        println("Hit the getUsers() endpoint")
+        return  userService.getTodos().map {
+            TodoResponse(it.id, it.title, it.status, it.createdAt, it.deadLine)
         }
-//        val resultTodo = todoList.find { title: User -> title.Id == todoId }
-        if(resultTodo == null) throw NotFoundError("User with id $todoId not found!")
-        return resultTodo
+    }
+
+
+
+
+    @GetMapping("/todos/{todoId}")
+    fun getTodos(@PathVariable todoId: Int): TodoResponse{
+        val todo = userService.getTodoById(todoId)
+        return TodoResponse(todo.id, todo.title, todo.status, todo.createdAt, todo.deadLine)
     }
 
     @PostMapping("/todos")
