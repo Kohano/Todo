@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import kotlin.random.Random
 @Service
 class TodoService{
-    val todoList: MutableList<Todo> = mutableListOf(
+    private val todoList: MutableList<Todo> = mutableListOf(
         Todo(1,  "Morning Coffee" ),
         Todo(2, "Wash up"),
         Todo(3,  "Clean the House"),
