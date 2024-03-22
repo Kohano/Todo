@@ -38,7 +38,7 @@ class TodoServiceTests{
         val noneExistingTodo= 5
 
         // then
-        org.junit.jupiter.api.assertThrows<BadRequestError> {
+        org.junit.jupiter.api.assertThrows<NotFoundError> {
             // when
             todoService.getTodoById(noneExistingTodo)
         }
