@@ -1,9 +1,6 @@
-package com.sumiProject.first.web
+package com.sumiproject.first.web
 
 import com.sumiproject.first.domain.TodoService
-import com.sumiproject.first.web.CreateTodoRequest
-import com.sumiproject.first.web.TodoResponse
-import com.sumiproject.first.web.UpdateTodoRequest
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping

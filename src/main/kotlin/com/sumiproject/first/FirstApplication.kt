@@ -1,4 +1,4 @@
-package com.sumiProject.first
+package com.sumiproject.first
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
