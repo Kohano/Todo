@@ -125,7 +125,7 @@ class TodoServiceTests{
 //        then
         val exceptedId = createTodo.id
         assertEquals(exceptedId,actualResult.id)
-        assertEquals(remainningTodos.isEmpty(),false)
+        assertEquals(remainningTodos.isEmpty(),true)
 
     }
     @Test
