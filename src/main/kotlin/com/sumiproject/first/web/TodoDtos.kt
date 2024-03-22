@@ -1,23 +1,23 @@
-package com.SumiProject.first.web
+package com.sumiproject.first.web
 
-import com.SumiProject.first.Domain.Status
+import com.sumiproject.first.domain.Status
 import java.time.LocalDateTime
 
 data class CreateTodoRequest(
     val title: String,
-    var deadLine: LocalDateTime?
+    var deadLine: LocalDateTime?,
 )
 
 data class UpdateTodoRequest(
     val title: String,
     val status: Status,
-    var deadLine: LocalDateTime?
+    var deadLine: LocalDateTime?,
 )
 
 data class TodoResponse(
-    val id : Int,
-    var title : String,
+    val id: Int,
+    var title: String,
     var status: Status,
     val createdAt: LocalDateTime,
-    var deadLine : LocalDateTime?
+    var deadLine: LocalDateTime?,
 )

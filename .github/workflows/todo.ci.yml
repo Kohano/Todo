@@ -16,3 +16,7 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
+
+      - name: Lint test
+        run: ./gradlew ktlintCheck
+
