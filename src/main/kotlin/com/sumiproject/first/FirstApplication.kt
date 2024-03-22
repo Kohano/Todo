@@ -1,4 +1,4 @@
-package com.sumiProject.first
+package com.sumiproject.first
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class FirstApplication
 
 fun main(args: Array<String>) {
-	runApplication<FirstApplication>(*args)
+    runApplication<FirstApplication>(*args)
 }
